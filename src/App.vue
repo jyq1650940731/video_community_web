@@ -2,8 +2,15 @@
 </script>
 
 <template>
-  <div>nihao</div>
+  <div><p>
+    123
+  </p></div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
+div{
+  p{
+    color: red;
+  }
+}
 </style>
