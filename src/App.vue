@@ -4,9 +4,7 @@ login({username:"1234",password:"21345"});
 </script>
 
 <template>
-  <div><p>
-    123
-  </p></div>
+  <router-view></router-view>
   <svg-icon name="jh" color="red"></svg-icon>
 </template>
 
