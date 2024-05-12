@@ -7,14 +7,14 @@ const request = axios.create({
 
 //拦截请求
 request.interceptors.request.use((config) => {
-    return config;
+  return config;
 });
 //拦截响应
 request.interceptors.response.use(
-  (response:any) => {
+  (response: any) => {
     return response.data;
   },
-  (error:any) => {
+  (error: any) => {
     //处理错误
     let message = '';
     const status = error.response.status;
@@ -40,6 +40,5 @@ request.interceptors.response.use(
     Promise.reject(error);
   },
 );
-
 
 export default request;

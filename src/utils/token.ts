@@ -1,5 +1,5 @@
-
-import { storage, tokenTableName } from '@/config'
+import config from '@/config';
+const { storage, tokenTableName } = config;
 // import cookie from 'js-cookie'
 
 /**
@@ -10,18 +10,18 @@ import { storage, tokenTableName } from '@/config'
 export function getToken() {
   if (storage) {
     if ('localStorage' === storage) {
-      return localStorage.getItem(tokenTableName)
+      return localStorage.getItem(tokenTableName);
     } else if ('sessionStorage' === storage) {
-      return sessionStorage.getItem(tokenTableName)
+      return sessionStorage.getItem(tokenTableName);
     }
     //  else if ('cookie' === storage) {
     //   return cookie.get(tokenTableName)
-    // } 
+    // }
     else {
-      return localStorage.getItem(tokenTableName)
+      return localStorage.getItem(tokenTableName);
     }
   } else {
-    return localStorage.getItem(tokenTableName)
+    return localStorage.getItem(tokenTableName);
   }
 }
 
@@ -34,18 +34,18 @@ export function getToken() {
 export function setToken(token: string) {
   if (storage) {
     if ('localStorage' === storage) {
-      return localStorage.setItem(tokenTableName, token)
+      return localStorage.setItem(tokenTableName, token);
     } else if ('sessionStorage' === storage) {
-      return sessionStorage.setItem(tokenTableName, token)
-    } 
+      return sessionStorage.setItem(tokenTableName, token);
+    }
     // else if ('cookie' === storage) {
     //   return cookie.set(tokenTableName, token)
     // }
-     else {
-      return localStorage.setItem(tokenTableName, token)
+    else {
+      return localStorage.setItem(tokenTableName, token);
     }
   } else {
-    return localStorage.setItem(tokenTableName, token)
+    return localStorage.setItem(tokenTableName, token);
   }
 }
 
@@ -56,17 +56,17 @@ export function setToken(token: string) {
 export function removeToken() {
   if (storage) {
     if ('localStorage' === storage) {
-      return localStorage.removeItem(tokenTableName)
+      return localStorage.removeItem(tokenTableName);
     } else if ('sessionStorage' === storage) {
-      return sessionStorage.clear()
-    } 
+      return sessionStorage.clear();
+    }
     // else if ('cookie' === storage) {
     //   return cookie.remove(tokenTableName)
     // }
-     else {
-      return localStorage.removeItem(tokenTableName)
+    else {
+      return localStorage.removeItem(tokenTableName);
     }
   } else {
-    return localStorage.removeItem(tokenTableName)
+    return localStorage.removeItem(tokenTableName);
   }
 }
