@@ -41,6 +41,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
             libraryName: 'element-plus',
             esModule: true,
             resolveStyle: (name) => {
+              console.log(name);
               return `element-plus/theme-chalk/${name}.css`;
             },
           },

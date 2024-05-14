@@ -1,0 +1,26 @@
+[
+  {
+    "name": "专栏",
+    "icon": "Tickets"
+  },
+  {
+    "name": "直播",
+    "icon": "VideoCameraFilled"
+  },
+  {
+    "name": "活动",
+    "icon": "Flag"
+  },
+  {
+    "name": "课堂",
+    "icon": "BellFilled"
+  },
+  {
+    "name": "社区中心",
+    "icon": "ChatDotSquare"
+  },
+  {
+    "name": "新歌热榜",
+    "icon": "Microphone"
+  }
+]

@@ -1,0 +1,63 @@
+@keyframes shrink {
+  to {
+    transform: scale(1);
+    /* 缩小到原始大小 */
+  }
+}
+
+/* 淡入动画 */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    /* 初始状态透明 */
+    transform: translateY(-10px);
+    /* 向上平移 10px，将元素隐藏在顶部 */
+  }
+
+  100% {
+    opacity: 1;
+    /* 最终状态不透明 */
+    transform: translateY(0);
+    /* 平移恢复到原始位置 */
+  }
+}
+
+/* 淡出动画 */
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    /* 初始状态不透明 */
+    transform: translateY(0);
+    /* 原始位置 */
+  }
+
+  100% {
+    opacity: 0;
+    /* 最终状态透明 */
+    transform: translateY(-10px);
+    /* 向上平移 10px，将元素隐藏在顶部 */
+  }
+}
+
+/* 跳动效果 */
+@keyframes jump {
+  0%,
+  100% {
+    transform: translateY(0);
+    /* 起始和结束状态，图标回到原位 */
+  }
+
+  50% {
+    transform: translateY(-5px);
+    /* 中间状态，图标向上跳动 20px */
+  }
+}
+
+@keyframes headerSlideDown {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -7,11 +7,25 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CenterContainer: typeof import('./src/components/HeaderBar/children/CenterContainer.vue')['default']
+    CenterContent: typeof import('./src/components/HeaderBar/children/CenterContent.vue')['default']
+    ChannelFiexd: typeof import('./src/components/HeaderChannel/children/channelFiexd.vue')['default']
+    ChannelFiexl: typeof import('./src/components/HeaderChannel/children/channelFiexl.vue')['default']
+    ChannelFixed: typeof import('./src/components/HeaderChannel/children/ChannelFixed.vue')['default']
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
+    ElCarousel: typeof import('element-plus/es')['ElCarousel']
+    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElSkeleton: typeof import('element-plus/es')['ElSkeleton']
     HeaderBar: typeof import('./src/components/HeaderBar/index.vue')['default']
-    NInput: typeof import('naive-ui')['NInput']
-    NSpace: typeof import('naive-ui')['NSpace']
+    HeaderChannel: typeof import('./src/components/HeaderChannel/index.vue')['default']
+    LeftEntry: typeof import('./src/components/HeaderBar/children/LeftEntry.vue')['default']
+    RecommendedSwipe: typeof import('./src/components/RecommendedSwipe/index.vue')['default']
+    RightEntry: typeof import('./src/components/HeaderBar/children/RightEntry.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./src/components/SvgIcon/index.vue')['default']
+    VideoSkeleton: typeof import('./src/components/VideoSkeleton/index.vue')['default']
   }
 }

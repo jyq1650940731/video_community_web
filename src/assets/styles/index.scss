@@ -1,14 +1,46 @@
 @import url('./normalize.css');
 @import url('../font/font.css');
+@import url('./animated.scss');
 @import url('./variables/map.css');
-@import url('./variables//global.css');
+@import url('./variables/global.css');
+@import url('./element.css');
 @import url('./vendor.css');
+@import url('./videoCard.scss');
 
 body {
   font-family: 'Harmony Font';
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text1);
   min-width: 1100px;
   overflow-x: auto;
   background-color: var(--graph_bg_regular);
+}
+
+.bala-header_bar {
+  .left-entry {
+    [class*='entry'] {
+      height: 64px;
+      line-height: 64px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+
+  .default-entry span,
+  .right-entry-icon {
+    display: inline-block;
+  }
+  .default-entry:hover span,
+  .right-entry__outside:hover .right-entry-icon {
+    animation: jump 0.3s;
+    /* 应用跳动动画效果 */
+  }
+}
+@media (min-width: 1701px) and (max-width: 2199.9px) {
+  .bala-header_bar {
+    [class*='entry'] {
+      margin-right: 20px;
+    }
+  }
 }
