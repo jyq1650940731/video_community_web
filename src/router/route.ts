@@ -19,6 +19,10 @@ const constantRoutes = [
     name: 'home',
   },
   {
+    path: '/video/:vid',
+    component: () => import('@/views/video/index.vue'),
+  },
+  {
     path: '/404',
     component: () => import('@/views/404.vue'),
     name: '404',

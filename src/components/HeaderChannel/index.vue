@@ -8,7 +8,7 @@ import ChannelFixed from './children/ChannelFixed.vue';
 
 defineProps(['isFixChannel'])
 </script>
-<style lang='scss' scoped>
+<style lang='scss' scoped name="HeaderChannel">
 .bala-header_channel {
     position: relative;
     width: 100%;

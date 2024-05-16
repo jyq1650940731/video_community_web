@@ -36,7 +36,7 @@
         </div>
     </div>
 </template>
-<script lang='ts' setup>
+<script lang='ts' setup name="channelFixed">
 import { ref } from 'vue';
 const isChannelDown = ref(false);
 

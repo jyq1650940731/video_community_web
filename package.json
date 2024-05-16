@@ -13,8 +13,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@nplayer/danmaku": "^1.0.12",
+    "@nplayer/vue": "^1.0.12",
     "axios": "^1.6.8",
     "element-plus": "^2.7.2",
+    "nplayer": "^1.0.15",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
