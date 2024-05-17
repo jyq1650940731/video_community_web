@@ -6,9 +6,15 @@ const request = axios.create({
 });
 
 //拦截请求
-request.interceptors.request.use((config) => {
-  return config;
-});
+//拦截请求
+request.interceptors.request.use(
+  (config) => {
+    // const token = useUserStore().token;
+    // if (token) config.headers[tokenTableName] = `${token}`;
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 //拦截响应
 request.interceptors.response.use(
   (response: any) => {

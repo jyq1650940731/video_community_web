@@ -1,9 +1,9 @@
 <template>
-    <header-channek v-bind="$attrs"></header-channek>
+    <channel v-bind="$attrs"></channel>
     <channel-fixed v-bind="$attrs" v-show="isFixChannel"></channel-fixed>
 </template>
 <script lang='ts' setup>
-import HeaderChannek from './children/HeaderChannel.vue';
+import Channel from './children/Channel.vue';
 import ChannelFixed from './children/ChannelFixed.vue';
 
 defineProps(['isFixChannel'])

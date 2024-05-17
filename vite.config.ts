@@ -18,6 +18,8 @@ import {
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
   let env = loadEnv(mode, process.cwd());
+  console.log(env);
+
   return {
     plugins: [
       vue(),
@@ -30,6 +32,10 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         imports: ['vue', 'vue-router', 'pinia'],
         // targets to transform
         resolvers: [ElementPlusResolver()],
+        // dts: '/auto-import.d.ts',
+        eslintrc: {
+          enabled: true, // 1、改为true用于生成eslint配置。2、生成后改回false，避免重复生成消耗
+        },
       }),
       Components({
         resolvers: [ElementPlusResolver()],
@@ -62,17 +68,17 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         },
       },
     },
-    // server: {
-    //   //用来配置跨域
-    //   host: 'localhost',
-    //   port: 5174,
-    //   proxy: {
-    //     '/dev-api': {
-    //       target: env.VITE_SERVE,
-    //       changeOrigin: true,
-    //       rewrite: (path) => path.replace(/^\/dev-api/, ''),
-    //     },
-    //   },
-    // },
+    server: {
+      //用来配置跨域
+      host: 'localhost',
+      port: 5174,
+      proxy: {
+        '/dev-api': {
+          target: env.VITE_SERVE,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api/, ''),
+        },
+      },
+    },
   };
 };

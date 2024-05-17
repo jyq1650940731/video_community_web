@@ -21,7 +21,7 @@
                         item.name }}</router-link>
             </div>
             <div class="channel-items__right">
-                <router-link to="/" v-for="(item) in rchannelLink" class="channel-link__right">
+                <router-link to="/" v-for="(item) in rchannelLink" :key="item.id" class="channel-link__right">
                     <component class="side-icon" :is="item.icon"></component>
                     <span>{{ item.name }}</span>
                 </router-link>

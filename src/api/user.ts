@@ -1,20 +1,21 @@
 import request from '@/utils/request';
-import type { loginForm, loginResponseData, userResponseData } from './type';
+import type { responseData } from '@/types/api';
+import type { loginForm } from '@/types/request';
 
 enum API {
-  LOGIN_URL = '/user/login',
-  USERINFO_URL = '/user/info',
+  LOGIN_URL = '/login',
+  USERINFO_URL = '/userinfo',
 }
 
 export const login = (data: loginForm) =>
-  request<any, loginResponseData>({
+  request<any, responseData>({
     url: API.LOGIN_URL,
     method: 'post',
     data,
   });
 
 export const getUserInfo = () =>
-  request<any, userResponseData>({
+  request<any, responseData>({
     url: API.USERINFO_URL,
     method: 'get',
   });

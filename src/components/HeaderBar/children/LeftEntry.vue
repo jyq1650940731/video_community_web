@@ -22,6 +22,7 @@
 </template>
 <script lang='ts' setup>
 import { ElMessage } from 'element-plus';
+import { ref } from 'vue';
 const isOpen = ref(false);
 
 const noPage = () => {

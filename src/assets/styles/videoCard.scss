@@ -30,57 +30,6 @@
   margin-right: 2px;
 }
 
-.bala-video-card__skeleton {
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-.bala-video-card__skeleton.hide {
-  visibility: hidden;
-}
-
-.bala-video-card__skeleton--cover {
-  padding-top: var(--cover-radio);
-  border-radius: 6px;
-  background-color: var(--graph_bg_regular);
-}
-
-.bala-video-card__skeleton--info {
-  margin-top: var(--info-margin-top);
-  display: -webkit-flex;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
-.bala-video-card__skeleton--right {
-  min-width: 0;
-  flex: 1;
-}
-
-.bala-video-card__skeleton--text {
-  margin-bottom: 4px;
-  width: 94%;
-  height: calc(var(--title-line-height) - 4px);
-  border-radius: 4px;
-  background-color: var(--graph_bg_regular);
-}
-
-.bala-video-card__skeleton--text.short {
-  width: 72%;
-}
-
-.bala-video-card__skeleton--light {
-  margin-top: 8px;
-  width: 50%;
-  height: var(--subtitle-line-height);
-  border-radius: 4px;
-  background-color: var(--graph_bg_regular);
-}
-
 .bala-video-card .loading_animation .bala-video-card__skeleton--cover,
 .bala-video-card .loading_animation .bala-video-card__skeleton--text,
 .bala-video-card .loading_animation .bala-video-card__skeleton--light {

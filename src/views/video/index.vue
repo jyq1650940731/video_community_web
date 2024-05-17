@@ -1,27 +1,21 @@
 <template>
     <div class="video-page">
+        <header-bar :isFixHeaderBar="true"></header-bar>
         <div class="video-container">
             <div class="left-container">
-                <div class="video-box_report">
-                    <p class="video-info-title"></p>
-                    <ul class="video-info-meta">
-                        <li class="view item"></li>
-                        <li class="dm item"></li>
-                        <li class="update-ip item"></li>
-                        <li class="copyright item">
-                            <p class="copyright-text">未经作者授权，禁止转载</p>
-                        </li>
-                    </ul>
-                </div>
+                <title-info></title-info>
                 <NPlayer :options="options" :set="setPlayer" />
             </div>
-            <div class="right-container"></div>
+            <div class="right-container">
+            </div>
         </div>
     </div>
 </template>
 <script lang='ts' setup>
 import { onMounted, ref } from 'vue';
 import Danmaku from '@nplayer/danmaku'
+
+import TitleInfo from './components/TitleInfo.vue'
 
 let player = null;
 
@@ -65,4 +59,32 @@ const options = {
     // plugins: [new Danmaku(danmakuOptions)]
 }
 </script>
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.video-container {
+    width: auto;
+    padding: 64px 10px 0px;
+    max-width: 2540px;
+    min-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    box-sizing: content-box;
+    position: relative;
+
+
+    .left-container {
+        position: sticky;
+        height: fit-content;
+    }
+
+    .right-container {
+        width: 411px;
+        flex: none;
+        margin-left: 30px;
+        position: relative;
+        pointer-events: none;
+    }
+
+
+}
+</style>
