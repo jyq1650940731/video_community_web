@@ -56,6 +56,7 @@ defineProps(['listBar', 'isFixHeaderBar'])
 
     .default-entry {
         display: inline-block;
+        margin-right: 20px;
 
         &:hover span {
             animation: jump .3s;

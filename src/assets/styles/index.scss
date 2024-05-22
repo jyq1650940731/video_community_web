@@ -16,6 +16,10 @@ body {
   background-color: var(--graph_bg_regular);
 }
 
+#app {
+  background-color: var(--bg1);
+}
+
 .bala-header_bar {
   .left-entry {
     [class*='entry'] {

@@ -1,11 +1,11 @@
 <template>
     <!-- 登录框 -->
     <el-dialog style="border-radius: 10px;" v-model="dialogVisible" center width="820" :close-on-click-modal="false"
-        destroy-on-close align-center>
+        destroy-on-close align-center @close="close(formRef, registerRef)">
         <div class="bala-login-container">
             <div class="bala-login-right-wp">
                 <el-tabs v-model="activeName" type="card" class="login-tab" @tab-click="handleClick">
-                    <el-tab-pane label="密码登录" name="login" lazy>
+                    <el-tab-pane label="密码登录" name="login">
                         <el-form class="login-form" ref="formRef" :rules="rules" :model="loginForm">
                             <el-input type="text" class="login_input" v-model="loginForm.username" placeholder="请输入账号">
                                 <template #prefix>
@@ -24,21 +24,29 @@
                             </div>
                         </el-form>
                     </el-tab-pane>
-                    <el-tab-pane label="账号注册" name="register" lazy>
-                        <el-input type="text" class="login_input" v-model="registerForm.username" placeholder="请输入账号">
-                            <template #prefix>
-                                <p class="input-tips">账号</p>
-                            </template>
-                        </el-input>
-                        <el-input type="text" show-password class="login_input" v-model="registerForm.password"
-                            placeholder="请输入密码">
-                            <template #prefix>
-                                <p class="input-tips">密码</p>
-                            </template>
-                        </el-input>
-                        <div class="bala-login-btn_wp">
-                            <el-button class="bala-login-btn">注册/登录</el-button>
-                        </div>
+                    <el-tab-pane label="账号注册" name="register">
+                        <el-form ref="registerRef" :rules="rules" :model="registerForm">
+                            <el-input type="text" class="login_input" v-model="registerForm.username" placeholder="请输入账号">
+                                <template #prefix>
+                                    <p class="input-tips">账号</p>
+                                </template>
+                            </el-input>
+                            <el-input type="text" show-password class="login_input" v-model="registerForm.password"
+                                placeholder="请输入密码">
+                                <template #prefix>
+                                    <p class="input-tips">密码</p>
+                                </template>
+                            </el-input>
+                            <el-input type="text" show-password class="login_input" v-model="registerForm.confirmedPassword"
+                                placeholder="请再次输入密码">
+                                <template #prefix>
+                                    <p class="input-tips">确认密码</p>
+                                </template>
+                            </el-input>
+                            <div class="bala-login-btn_wp">
+                                <el-button class="bala-login-btn" @click="handleRegister(registerRef)">注册/登录</el-button>
+                            </div>
+                        </el-form>
                     </el-tab-pane>
                 </el-tabs>
                 <div class="login-agreement-wp">
@@ -57,21 +65,23 @@ import { isPassword } from '@/utils/validate';
 import { useUserStore } from '@/stores/modules/user';
 
 
-const { login } = useUserStore();
+const { login, register } = useUserStore();
 
 const formRef = ref<FormInstance>();
+const registerRef = ref<FormInstance>();
 const activeName = ref('login');
 const loading = ref(false);
 const dialogVisible = ref(false);
 
 
 const loginForm = reactive<FromRules>({
-    username: 'admin12',
-    password: '123456'
+    username: 'wsjyq123',
+    password: '132066'
 })
 const registerForm = reactive<FromRules>({
     username: '',
-    password: ''
+    password: '',
+    confirmedPassword: ''
 })
 
 // 校验
@@ -84,6 +94,10 @@ const validatePassword = (rule: any, value: string | any[], callback: any) => {
     if (!isPassword(value)) callback(new Error('密码不能少于6位'))
     else callback()
 }
+// const validatePassword = (rule: any, value: string | any[], callback: any) => {
+//     if (!isPassword(value)) callback(new Error('密码不能少于6位'))
+//     else callback()
+// }
 const rules = reactive<FormRules<typeof loginForm>>({
     username: [
         {
@@ -98,7 +112,7 @@ const rules = reactive<FormRules<typeof loginForm>>({
             trigger: 'change',
             validator: validatePassword
         }
-    ],
+    ]
 })
 
 
@@ -129,6 +143,42 @@ const handleLogin = (formEl: FormInstance | undefined) => {
             }
         }
     })
+}
+
+const handleRegister = (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    formEl.validate(async (valid) => {
+        if (valid) {
+            try {
+                loading.value = true
+                await register({
+                    username: registerForm.username,
+                    password: registerForm.password,
+                    confirmedPassword: registerForm.confirmedPassword
+                })
+                //注册成功后直接登录
+                await login({
+                    username: registerForm.username,
+                    password: registerForm.password
+                })
+                dialogVisible.value = false;
+            }
+            finally {
+                loading.value = false
+            }
+        }
+    })
+}
+
+const close = (formEl1: FormInstance | undefined, formEl2: FormInstance | undefined) => {
+    registerForm.username = '';
+    registerForm.password = '';
+    registerForm.confirmedPassword = '';
+    loginForm.username = '';
+    loginForm.password = '';
+    formEl1?.resetFields();
+    formEl2?.resetFields();
+    dialogVisible.value = false;
 }
 
 defineExpose({ showDialog })

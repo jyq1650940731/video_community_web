@@ -1,4 +1,18 @@
+/*
+ * @Author: YourName
+ * @Date: 2024-05-17 17:33:04
+ * @LastEditTime: 2024-05-22 10:35:41
+ * @LastEditors: YourName
+ * @Description:
+ * @FilePath: \video_community_web\src\utils\request.ts
+ * 版权声明
+ */
 import axios from 'axios';
+import config from '@/config';
+import { ElMessage } from 'element-plus';
+import { useUserStore } from '@/stores/modules/user';
+
+const { successCode, tokenTableName } = config;
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -6,18 +20,26 @@ const request = axios.create({
 });
 
 //拦截请求
-//拦截请求
 request.interceptors.request.use(
   (config) => {
-    // const token = useUserStore().token;
-    // if (token) config.headers[tokenTableName] = `${token}`;
+    const { token } = useUserStore();
+    if (token) config.headers[tokenTableName] = `${token}`;
     return config;
   },
   (error) => Promise.reject(error),
 );
+
 //拦截响应
 request.interceptors.response.use(
   (response: any) => {
+    const code = response.data.code;
+    if (!successCode.includes(code)) {
+      ElMessage({
+        message: `${response.data.message}`,
+        type: 'error',
+      });
+      // return Promise.reject(new Error(response.data.message));
+    }
     return response.data;
   },
   (error: any) => {
@@ -41,8 +63,11 @@ request.interceptors.response.use(
         message = '网络问题';
         break;
     }
+    ElMessage({
+      message,
+      type: 'error',
+    });
 
-    //返回错误信息
     Promise.reject(error);
   },
 );

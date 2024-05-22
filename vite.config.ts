@@ -10,6 +10,7 @@ import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { UndrawUiResolver } from 'undraw-ui/es/resolvers';
 import {
   createStyleImportPlugin,
   ElementPlusResolve,
@@ -38,7 +39,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         },
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [ElementPlusResolver(), UndrawUiResolver],
       }),
       createStyleImportPlugin({
         resolves: [ElementPlusResolve()],

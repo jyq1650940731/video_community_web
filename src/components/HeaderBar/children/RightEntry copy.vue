@@ -1,0 +1,401 @@
+<template>
+    <ul class="right-entry">
+        <li class="header-avatar-wrap" v-if="!isLogin">
+            <div class="default-login" @click="lrRef.showDialog()">
+                登录
+            </div>
+        </li>
+        <li class="header-avatar-wrap" v-else @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+            <router-link to="/" class="header-avatar-wrap--container mini-avatar--small">
+                <div class="bala-avatar">
+                    <el-avatar :src="avatarUrl" />
+                </div>
+            </router-link>
+            <div class="v-popover to-bottom" :style="{ pointerEvents: isPopoverShow ? 'auto' : 'none' }">
+                <div class="avatar-panel-popover" :class="isPopoverShow ? 'popShow' : 'popHide'">
+                    <div class="big-avatar"></div>
+                    <router-link class="nickname-item" to="/">灰常V</router-link>
+                    <div class="counts-item">
+                        <router-link to="/" class="single-count-item" target="_blank">
+                            <div class="count-num">116</div>
+                            <div class="count-text">关注</div>
+                        </router-link>
+                        <router-link to="/" class="single-count-item" target="_blank">
+                            <div class="count-num">1</div>
+                            <div class="count-text">粉丝</div>
+                        </router-link>
+                        <router-link to="/" class="single-count-item" target="_blank">
+                            <div class="count-num">2</div>
+                            <div class="count-text">动态</div>
+                        </router-link>
+                    </div>
+                    <div class="links-item">
+                        <router-link to="/" class="single-link-item" target="_blank">
+                            <div class="link-title">
+                                <el-icon class="link-icon">
+                                    <UserFilled />
+                                </el-icon>
+                                <span>个人中心</span>
+                            </div>
+                            <el-icon class="link-icon--right">
+                                <ArrowRight />
+                            </el-icon>
+                        </router-link>
+                        <router-link to="/" class="single-link-item" target="_blank">
+                            <div class="link-title">
+                                <el-icon class="link-icon">
+                                    <DocumentAdd />
+                                </el-icon>
+                                <span>投稿管理</span>
+                            </div>
+                            <el-icon class="link-icon--right">
+                                <ArrowRight />
+                            </el-icon>
+                        </router-link>
+                    </div>
+                    <div class="split-line"></div>
+                    <div class="logout-item">
+                        <el-icon class="link-icon">
+                            <SwitchButton />
+                        </el-icon>
+                        <span>退出登录</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="v-popover-wrap">
+            <msg-popover :gotoLogin="gotoLogin"></msg-popover>
+        </li>
+        <li class="v-popover-wrap">
+            <msg-popover :gotoLogin="gotoLogin"></msg-popover>
+        </li>
+        <li class="v-popover-wrap">
+            <msg-popover :gotoLogin="gotoLogin"></msg-popover>
+        </li>
+        <li class="v-popover-wrap">
+            <msg-popover :gotoLogin="gotoLogin"></msg-popover>
+        </li>
+        <li class="right-entry-item right-entry-item--upload">
+            <div class="upload-buttom">
+                <svg-icon name="upload" class="tg-upload" :width="20"></svg-icon>
+                <span>投稿</span>
+            </div>
+        </li>
+    </ul>
+
+    <!-- 登录框 -->
+    <LoginRegister ref="lrRef"></LoginRegister>
+</template>
+<script lang='ts' setup>
+import { useUserStore } from '@/stores/modules/user';
+const { isLogin } = storeToRefs(useUserStore());
+
+let outTimer: any;
+let inTimer: any;
+
+const popoverVisible = ref(false);
+const state = reactive({
+    avatarUrl:
+        'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+    isHistoryOpen: false,
+    // 头像气泡框的显隐
+    popoverDisplay: "none",
+    isPopoverShow: false,
+    // 登录框组件的显隐
+    dialogVisible: false,
+    // 屏幕宽度
+    screenWidth: window.innerWidth,
+})
+const { avatarUrl, isHistoryOpen, isPopoverShow, popoverDisplay, dialogVisible, screenWidth } = toRefs(state);
+
+
+
+const lrRef = ref();
+
+const handleMouseEnter = () => {
+    clearTimeout(outTimer);     // 这里要清除隐藏的计时器，否则在0.2秒内出入头像，会导致头像变大但气泡突然消失
+    inTimer = setTimeout(() => {
+        popoverDisplay.value = "";
+        isPopoverShow.value = true;
+    }, 100);
+};
+const handleMouseLeave = () => {
+    clearTimeout(inTimer);    // 清除显示计时器防止快速经过头像时的气泡闪烁
+    isPopoverShow.value = false;
+    outTimer = setTimeout(() => {
+        popoverDisplay.value = "none";
+    }, 200);
+};
+
+const gotoLogin = () => {
+    popoverVisible.value = false;
+    lrRef.value.showDialog()
+}
+
+</script>
+<style lang='scss' scoped>
+.v-popover {
+    position: absolute;
+    z-index: 1;
+    padding-top: 20px;
+    margin-left: -20px;
+    cursor: default;
+}
+
+.to-bottom {
+    top: 100%;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+    /* 水平左移半个元素身位，使其水平与父元素居中 */
+}
+
+.avatar-panel-popover {
+    width: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 0 24px 18px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .1);
+    border: 1px solid var(--line_regular);
+
+    .big-avatar {
+        display: block;
+        margin-bottom: 4px;
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+    }
+
+    .nickname-item {
+        margin-top: -40px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2px;
+        font-size: 18px;
+        color: rgb(251, 114, 153);
+
+    }
+
+    .counts-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        padding: 0 20px;
+
+        .single-count-item {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: color .2s;
+
+            .count-num {
+                color: var(--text1);
+                font-size: 18px;
+                transition: color .2s;
+            }
+
+            .count-text {
+                color: var(--text3);
+                font-weight: 400;
+                font-size: 12px;
+                transition: color .2s;
+            }
+
+
+            &:hover .count-text,
+            &:hover .count-num {
+                color: var(--brand_blue);
+            }
+        }
+    }
+}
+
+.right-entry {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    flex-shrink: 0;
+
+    .header-avatar-wrap {
+        position: relative;
+        box-sizing: content-box;
+        padding-right: 20px;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+
+        &:hover {
+            .mini-avatar--small {
+                top: 15px;
+                left: -35px;
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        .default-login {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            z-index: 2;
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--Lb5);
+            text-align: center;
+            line-height: 40px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+
+        .header-avatar-wrap--container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .mini-avatar--small {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            z-index: 2;
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            /* 让内边距不增加宽度 */
+            border: 2px solid #fff;
+            transition: width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease;
+            /* 添加平滑过渡效果 */
+        }
+
+        // .header-avatar-wrap:hover .mini-avatar--small.shrink {
+        //     animation: shrink 0.3s both;
+        //     /* 初始状态为缩小 */
+        // }
+
+
+        .bala-avatar {
+            position: relative;
+            display: inline-block;
+            line-height: 1;
+            width: 100%;
+            height: 100%;
+            vertical-align: middle;
+            border-radius: 50%;
+            background-color: transparent;
+
+            .el-avatar {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: inherit;
+                border-radius: 50%;
+                image-rendering: -webkit-optimize-contrast;
+            }
+        }
+    }
+
+
+
+    .right-entry-item--upload {
+        margin-left: 15px;
+    }
+
+    .upload-buttom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90px;
+        height: 34px;
+        border-radius: 8px;
+        background: #fb7299;
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 34px;
+        cursor: pointer;
+        transition: background-color .3s;
+
+        &:hover {
+            background-color: #f992af;
+        }
+
+        .tg-upload {
+            margin-right: 5px;
+            line-height: 34px;
+            margin-top: -2px;
+        }
+    }
+}
+
+.links-item {
+    .single-link-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2px;
+        padding: 0 14px;
+        height: 38px;
+        border-radius: 8px;
+        color: var(--text2);
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color .3s;
+        white-space: nowrap;
+
+
+        &:hover {
+            background-color: var(--graph_bg_thick);
+        }
+
+        .link-title {
+            display: flex;
+            align-items: center;
+
+
+        }
+    }
+}
+
+.link-icon {
+    font-size: 18px;
+    margin-right: 16px;
+}
+
+.split-line {
+    margin: 10px 0;
+    width: 100%;
+    height: 1px;
+    background: var(--line_regular);
+}
+
+.logout-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: var(--text2);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color .3s;
+
+
+    &:hover {
+        background-color: var(--graph_bg_thick);
+    }
+
+}
+
+.popHide {
+    animation: fade-out 0.2s ease-out forwards;
+    transform-origin: top;
+    /* 设置动画的旋转点为顶部 */
+}
+
+.popShow {
+    animation: fade-in 0.2s ease-out forwards;
+    transform-origin: top;
+}
+</style>

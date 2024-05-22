@@ -6,6 +6,8 @@
     "src/**/*.vue",
     "src/**/*.ts",
     "src/**/*.js",
+    "src/assets/emoji/emoji.ts",
+    "src/assets/emoji/emoji.js",
     "./auto-imports.d.ts"
   ],
   "exclude": ["src/**/__tests__/*"],

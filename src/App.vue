@@ -6,10 +6,4 @@
 </template>
 
 
-<style scoped lang="scss">
-div {
-  p {
-    color: red;
-  }
-}
-</style>
+<style scoped lang="scss"></style>
