@@ -1,5 +1,14 @@
 /*
  * @Author: YourName
+ * @Date: 2024-05-22 14:35:24
+ * @LastEditTime: 2024-05-22 22:41:46
+ * @LastEditors: YourName
+ * @Description:
+ * @FilePath: \video_community_web\src\api\user.ts
+ * 版权声明
+ */
+/*
+ * @Author: YourName
  * @Date: 2024-05-17 17:33:04
  * @LastEditTime: 2024-05-22 09:34:47
  * @LastEditors: YourName

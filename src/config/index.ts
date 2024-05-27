@@ -7,7 +7,6 @@ import setting from './setting.config';
 import network from './net.config';
 // const theme = require('./theme.config')
 // const network = require('./net.config')
-console.log(cli);
 
 export default {
   ...cli,

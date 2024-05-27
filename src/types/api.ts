@@ -3,7 +3,7 @@ export interface responseData {
   code: number;
   result: any;
   success: boolean;
-  message?: string;
+  message: string;
 }
 
 //用户信息
@@ -25,4 +25,15 @@ export interface updataUserData {
   username: string;
   email: string;
   role: string;
+}
+
+//分片
+export interface ASKCHUNKData {
+  hash: string;
+}
+
+export interface uploadChunkData {
+  currentChunk: FormData;
+  hash: String;
+  index: Int16Array;
 }

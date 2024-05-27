@@ -15,7 +15,7 @@ export const getList = (params: any) =>
   });
 
 export const addUser = (data: addUserData) =>
-  request<any, responseData>({
+  request<responseData>({
     url: API.ADD_URL,
     method: 'post',
     data,

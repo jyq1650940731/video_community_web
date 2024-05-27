@@ -77,16 +77,24 @@
       <msg-popover :gotoLogin="gotoLogin"></msg-popover>
     </li>
     <li class="v-popover-wrap">
-      <msg-popover :gotoLogin="gotoLogin"></msg-popover>
+      <collection-popover :gotoLogin="gotoLogin"></collection-popover>
     </li>
     <li class="v-popover-wrap">
-      <msg-popover :gotoLogin="gotoLogin"></msg-popover>
+      <history-popover :gotoLogin="gotoLogin"></history-popover>
     </li>
-    <li class="v-popover-wrap">
-      <msg-popover :gotoLogin="gotoLogin"></msg-popover>
+    <li>
+      <router-link to="/" target="_black" class="right-entry__outside">
+        <svg-icon
+          name="creation"
+          class="right-entry-icon"
+          :width="25"
+          :height="25"
+        />
+        <span class="right-entry-text">创作中心</span>
+      </router-link>
     </li>
     <li class="right-entry-item right-entry-item--upload">
-      <div class="upload-buttom">
+      <div class="upload-buttom" @click="handleLinktTo('/platform/upload')">
         <svg-icon name="upload" class="tg-upload" :width="20"></svg-icon>
         <span>投稿</span>
       </div>
@@ -97,8 +105,10 @@
   <LoginRegister ref="lrRef"></LoginRegister>
 </template>
 <script lang="ts" setup>
+import router from '@/router';
 import { useUserStore } from '@/stores/modules/user';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { RouteLocationRaw } from 'vue-router';
 const { isLogin, userinfo } = storeToRefs(useUserStore());
 const { userLogout } = useUserStore();
 
@@ -161,6 +171,13 @@ const handleLogout = () => {
 const gotoLogin = () => {
   popoverVisible.value = false;
   lrRef.value.showDialog();
+};
+
+const handleLinktTo = (route: RouteLocationRaw) => {
+  console.log(router.resolve(route).href);
+
+  if (isLogin.value) window.open(router.resolve(route).href);
+  else gotoLogin();
 };
 </script>
 <style lang="scss" scoped>
@@ -235,6 +252,25 @@ const gotoLogin = () => {
         color: var(--brand_blue);
       }
     }
+  }
+}
+
+.right-entry__outside {
+  margin-right: 0;
+  min-width: 50px;
+  text-align: center;
+  font-size: 13px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-shrink: 0;
+
+  .right-entry-icon {
+    margin-bottom: 2px;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
@@ -326,10 +362,6 @@ const gotoLogin = () => {
         image-rendering: -webkit-optimize-contrast;
       }
     }
-  }
-
-  .right-entry-item--upload {
-    margin-left: 15px;
   }
 
   .upload-buttom {

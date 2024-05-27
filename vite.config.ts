@@ -35,7 +35,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         resolvers: [ElementPlusResolver()],
         // dts: '/auto-import.d.ts',
         eslintrc: {
-          enabled: true, // 1、改为true用于生成eslint配置。2、生成后改回false，避免重复生成消耗
+          enabled: false, // 1、改为true用于生成eslint配置。2、生成后改回false，避免重复生成消耗
         },
       }),
       Components({
@@ -48,7 +48,6 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
             libraryName: 'element-plus',
             esModule: true,
             resolveStyle: (name) => {
-              console.log(name);
               return `element-plus/theme-chalk/${name}.css`;
             },
           },

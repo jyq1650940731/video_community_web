@@ -1,44 +1,26 @@
-<!--
- * @Author: YourName
- * @Date: 2024-05-17 17:33:04
- * @LastEditTime: 2024-05-22 15:31:20
- * @LastEditors: YourName
- * @Description: 
- * @FilePath: \video_community_web\src\components\Popover\MsgPopover.vue
- * 版权声明
--->
 <template>
   <el-popover
     placement="bottom"
     trigger="hover"
-    :width="!isLogin ? 360 : 120"
+    :disabled="isLogin ? true : false"
+    :width="!isLogin ? 360 : 0"
     v-model:visible="popoverVisible"
   >
     <template #reference>
       <div class="right-entry__outside" @click="handleLink">
         <svg-icon
-          name="message"
+          name="history"
           class="right-entry-icon"
           :width="25"
           :height="25"
         />
-        <span class="right-entry-text">消息</span>
+        <span class="right-entry-text">历史</span>
       </div>
     </template>
     <div class="not-login_tips" v-if="!isLogin">
-      <p class="not-login_tips-text">登录即可查看消息动态</p>
+      <p class="not-login_tips-text">登录即可查看历史动态</p>
       <div class="not-login-btn" @click="handleLink">立即登录</div>
     </div>
-    <el-menu class="message-entry_list" v-else>
-      <el-menu-item
-        v-for="(item, index) in menuList"
-        :key="item"
-        :index="index + ''"
-        class="message-entry_list-item"
-      >
-        <span>{{ item }}</span>
-      </el-menu-item>
-    </el-menu>
   </el-popover>
 </template>
 <script lang="ts" setup>
@@ -54,7 +36,6 @@ const { gotoLogin } = defineProps({
     },
   },
 });
-const menuList = ['回复我的', '@我的', '收到的赞', '系统消息', '我的消息'];
 
 const popoverVisible = ref(false);
 const handleLink = () => {
@@ -68,22 +49,6 @@ const handleLink = () => {
 <style lang="scss" scoped>
 .message-entry_list {
   border-right: 0;
-}
-
-.el-menu--vertical:not(.el-menu--collapse):not(.el-menu--popup-container)
-  .el-menu-item {
-  padding-left: 15px;
-}
-
-.el-menu-item {
-  height: 38px;
-  line-height: 1;
-  color: var(--text2);
-
-  &:hover {
-    background-color: transparent;
-    color: var(--el-color-primary);
-  }
 }
 
 .el-popover {

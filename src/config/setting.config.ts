@@ -1,3 +1,12 @@
+/*
+ * @Author: YourName
+ * @Date: 2024-05-17 17:33:04
+ * @LastEditTime: 2024-05-25 23:41:12
+ * @LastEditors: YourName
+ * @Description:
+ * @FilePath: \video_community_web\src\config\setting.config.ts
+ * 版权声明
+ */
 /**
  * @description 导出通用配置
  */
@@ -12,6 +21,7 @@ export default {
   isHashRouterMode: true,
   // 不经过token校验的路由，白名单路由建议配置到与login页面同级，如果需要放行带传参的页面，请使用query传参，配置时只配置path即可
   routesWhiteList: ['/login', '/register', '/callback', '/404', '/403'],
+  ApiWhiteList: ['/login', '/register', '/category/getall'],
   // 加载时显示文字
   loadingText: '正在加载中...',
   // token名称
