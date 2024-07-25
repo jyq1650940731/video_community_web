@@ -1,7 +1,7 @@
 /*
  * @Author: YourName
  * @Date: 2024-05-17 17:33:04
- * @LastEditTime: 2024-05-26 19:07:09
+ * @LastEditTime: 2024-06-18 15:47:31
  * @LastEditors: YourName
  * @Description:
  * @FilePath: \video_community_web\src\utils\request.ts
@@ -12,6 +12,7 @@ import config from '@/config';
 import { ElMessage } from 'element-plus';
 import { removeToken } from './token';
 import { useUserStore } from '@/stores/modules/user';
+import router from '@/router';
 
 const { successCode, tokenTableName, ApiWhiteList } = config;
 
@@ -46,17 +47,17 @@ request.interceptors.response.use(
   },
   (error: any) => {
     //处理错误
-    console.log(error);
-
     let message = '';
     const status = error.response.status;
     switch (status) {
       case 401:
-        message = 'TOKEN过期';
+        // message = 'TOKEN过期';
         removeToken();
+        router.push('/');
         break;
       case 403:
         message = '无权访问';
+        router.push('/');
         break;
       case 404:
         message = '请求地址出错';
@@ -68,12 +69,12 @@ request.interceptors.response.use(
         message = '网络问题';
         break;
     }
-    ElMessage({
-      message,
-      type: 'error',
-    });
-
-    Promise.reject(error);
+    if (message)
+      ElMessage({
+        message,
+        type: 'error',
+      });
+    Promise.reject(new Error(error));
   },
 );
 

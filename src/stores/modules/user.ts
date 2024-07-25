@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref, computed, type ComputedRef } from 'vue';
 import type { loginForm } from '@/types/request';
-import type { userinfoType } from '@/types/info';
-
+import type { statsWithCurrentVideoType, userinfoType } from '@/types/info';
+import { useMessageStore } from './message';
 import {
   login as loginApi,
   register as registerApi,
@@ -19,44 +19,55 @@ import { ElNotification } from 'element-plus';
 
 export const useUserStore = defineStore('user', () => {
   //state
-  const state = {
-    token: ref(getTokenApi() as string),
-    isLogin: ref(false),
-    userinfo: reactive(<userinfoType>{}),
-  };
+  const state = reactive({
+    token: getTokenApi() as string,
+    isLogin: false,
+    userinfo: {} as userinfoType,
+    loginDialogVisible: false,
+  });
+
+  const attrs = reactive({
+    currentVideoAttrs: {} as statsWithCurrentVideoType,
+  });
 
   //getters
   const getToken = computed(() => {
-    return state.token.value;
+    return state.token;
   });
   const getUserinfo = computed(() => {
     return state.userinfo;
   });
   const getIslogin = computed(() => {
-    return state.isLogin.value;
+    return state.isLogin;
   });
 
-  const setUserinfo = (T?: userinfoType) => {
-    state.userinfo.avatarUrl = T?.avatarUrl;
-    state.userinfo.bgUrl = T?.bgUrl;
-    state.userinfo.description = T?.description;
-    state.userinfo.fansCount = T?.fansCount;
-    state.userinfo.followsCount = T?.followsCount;
-    state.userinfo.gender = T?.gender;
-    state.userinfo.loveCount = T?.loveCount;
-    state.userinfo.nickname = T?.nickname;
-    state.userinfo.playCount = T?.playCount;
-    state.userinfo.state = T?.state;
-    state.userinfo.uid = T?.uid;
-    state.userinfo.videoCount = T?.videoCount;
+  const setLoginDialogVisible = (T: boolean) => {
+    state.loginDialogVisible = T;
+  };
+
+  const setCurrentVideoAttrs = (T: statsWithCurrentVideoType) => {
+    attrs.currentVideoAttrs = T;
+  };
+
+  const setUpAvatarUrl = (T: string) => {
+    state.userinfo.avatarUrl = T;
+  };
+
+  const setCurrentGoodNum = (isSet: boolean) => {
+    if (isSet) attrs.currentVideoAttrs.good += 1;
+    else attrs.currentVideoAttrs.good -= 1;
+  };
+
+  const setUserinfo = (T: userinfoType | null) => {
+    if (T) state.userinfo = T;
   };
   const setToken = (T: string) => {
-    state.token.value = T;
+    state.token = T;
     if (T.length == 0) removeToken();
-    else setTokenApi(state.token.value);
+    else setTokenApi(state.token);
   };
   const setIsLogin = (T: boolean) => {
-    state.isLogin.value = T;
+    state.isLogin = T;
   };
 
   const login = async (userInfo: loginForm) => {
@@ -82,10 +93,12 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const userLogout = async () => {
+    const useMessage = useMessageStore();
     await logout();
-    setUserinfo();
+    setUserinfo(null);
     setToken('');
     setIsLogin(false);
+    useMessage.init();
   };
 
   const handleUserinfo = async () => {
@@ -95,10 +108,15 @@ export const useUserStore = defineStore('user', () => {
   };
 
   return {
-    ...state,
+    ...toRefs(state),
+    ...toRefs(attrs),
     login,
     register,
     userLogout,
     handleUserinfo,
+    setLoginDialogVisible,
+    setCurrentVideoAttrs,
+    setCurrentGoodNum,
+    setUpAvatarUrl,
   };
 });

@@ -24,8 +24,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-let inTimer; // 节流计时器
-let outTimer;
+let inTimer: number | undefined; // 节流计时器
+let outTimer: number | undefined;
 const progressRef = ref();
 const isActive = ref(false);
 const isDragging = ref(false);
@@ -77,7 +77,7 @@ const initDrag = () => {
   let offsetX, currPer;
 
   // 鼠标按下事件处理程序
-  progress.addEventListener('mousedown', (e) => {
+  progress.addEventListener('mousedown', (e: { clientX: number }) => {
     isDragging.value = true;
     isActive.value = true;
     offsetX = e.clientX - progress.getBoundingClientRect().left; // 鼠标相对进度条左侧的X偏移

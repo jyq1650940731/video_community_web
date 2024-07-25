@@ -1,3 +1,12 @@
+<!--
+ * @Author: YourName
+ * @Date: 2024-05-22 16:37:14
+ * @LastEditTime: 2024-06-14 10:34:07
+ * @LastEditors: YourName
+ * @Description: 
+ * @FilePath: \video_community_web\src\views\platform\upload\index.vue
+ * 版权声明
+-->
 <template>
   <div class="video-up-app">
     <div class="platform-upload">
@@ -13,6 +22,8 @@
 </template>
 
 <script lang="ts" setup name="PlatformUpload">
+import route from '@/router/route';
+
 const isNavBarShow = ref(true);
 const navBarData = reactive([
   { name: '视频投稿', path: '/platform/upload/video' },

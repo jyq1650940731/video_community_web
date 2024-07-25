@@ -1,3 +1,12 @@
+/*
+ * @Author: YourName
+ * @Date: 2024-05-22 14:35:24
+ * @LastEditTime: 2024-06-03 14:36:43
+ * @LastEditors: YourName
+ * @Description:
+ * @FilePath: \video_community_web\vite.config.ts
+ * 版权声明
+ */
 import { fileURLToPath, URL } from 'node:url';
 
 import { UserConfigExport, ConfigEnv, loadEnv } from 'vite';
@@ -19,7 +28,6 @@ import {
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
   let env = loadEnv(mode, process.cwd());
-  console.log(env);
 
   return {
     plugins: [
@@ -76,6 +84,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         '/dev-api': {
           target: env.VITE_SERVE,
           changeOrigin: true,
+          ws: true,
           rewrite: (path) => path.replace(/^\/dev-api/, ''),
         },
       },

@@ -7,15 +7,17 @@
     v-model:visible="popoverVisible"
   >
     <template #reference>
-      <div class="right-entry__outside" @click="handleLink">
-        <svg-icon
-          name="collectionK"
-          class="right-entry-icon"
-          :width="25"
-          :height="25"
-        />
-        <span class="right-entry-text">收藏</span>
-      </div>
+      <router-link :to="`space/${userinfo.uid}/favlist`">
+        <div class="right-entry__outside" @click="handleLink">
+          <svg-icon
+            name="collectionK"
+            class="right-entry-icon"
+            :width="25"
+            :height="25"
+          />
+          <span class="right-entry-text">收藏</span>
+        </div>
+      </router-link>
     </template>
     <div class="not-login_tips" v-if="!isLogin">
       <p class="not-login_tips-text">登录即可查看收藏动态</p>
@@ -25,7 +27,7 @@
 </template>
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/modules/user';
-const { isLogin } = storeToRefs(useUserStore());
+const { isLogin, userinfo } = storeToRefs(useUserStore());
 
 const { gotoLogin } = defineProps({
   gotoLogin: {

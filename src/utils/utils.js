@@ -43,7 +43,7 @@ export function emojiText(text) {
       if (emojiIndex !== -1) {
         const { name, url } = EmojiList[emojiIndex];
         // 构建替换的 HTML
-        return `<a class="emotion-items" title="${name}"><div class="img-emoji" style="background-image:url('${url}'); height:20px; width:20px;"></div></a>`;
+        return `<a class="emotion-items" title="${name}"><div class="img-emoji" style="background-image:url('${url}');background-position: center center;background-repeat: no-repeat;background-size: cover; height:20px; width:20px;"></div></a>`;
       } else {
         // 如果未找到对应的表情，返回原始字符串
         return match;

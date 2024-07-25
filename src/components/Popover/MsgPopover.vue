@@ -1,7 +1,7 @@
 <!--
  * @Author: YourName
  * @Date: 2024-05-17 17:33:04
- * @LastEditTime: 2024-05-22 15:31:20
+ * @LastEditTime: 2024-06-28 18:17:53
  * @LastEditors: YourName
  * @Description: 
  * @FilePath: \video_community_web\src\components\Popover\MsgPopover.vue
@@ -15,36 +15,51 @@
     v-model:visible="popoverVisible"
   >
     <template #reference>
-      <div class="right-entry__outside" @click="handleLink">
-        <svg-icon
-          name="message"
-          class="right-entry-icon"
-          :width="25"
-          :height="25"
-        />
-        <span class="right-entry-text">消息</span>
-      </div>
+      <el-badge
+        :value="useMessage.msgCount"
+        :hidden="useMessage.msgCount > 0 ? false : true"
+        class="item"
+      >
+        <div class="right-entry__outside" @click="handleLink('reply')">
+          <svg-icon
+            name="message"
+            class="right-entry-icon"
+            :width="25"
+            :height="25"
+          />
+          <span class="right-entry-text">消息</span>
+        </div>
+      </el-badge>
     </template>
     <div class="not-login_tips" v-if="!isLogin">
       <p class="not-login_tips-text">登录即可查看消息动态</p>
-      <div class="not-login-btn" @click="handleLink">立即登录</div>
+      <div class="not-login-btn" @click="handleLink()">立即登录</div>
     </div>
     <el-menu class="message-entry_list" v-else>
-      <el-menu-item
+      <el-badge
+        :value="useMessage.msgUnread[index]"
+        class="el-menu_badge"
         v-for="(item, index) in menuList"
-        :key="item"
-        :index="index + ''"
-        class="message-entry_list-item"
+        :hidden="useMessage.msgUnread[index] > 0 ? false : true"
+        :key="item.path"
+        :index="index"
       >
-        <span>{{ item }}</span>
-      </el-menu-item>
+        <el-menu-item
+          class="message-entry_list-item"
+          @click="handleLink(item.path)"
+        >
+          <span>{{ item.name }}</span>
+        </el-menu-item>
+      </el-badge>
     </el-menu>
   </el-popover>
 </template>
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/modules/user';
-const { isLogin } = storeToRefs(useUserStore());
-
+import { useMessageStore } from '@/stores/modules/message';
+import router from '@/router';
+const { isLogin, userinfo } = storeToRefs(useUserStore());
+const useMessage = useMessageStore();
 const { gotoLogin } = defineProps({
   gotoLogin: {
     type: Function,
@@ -54,14 +69,21 @@ const { gotoLogin } = defineProps({
     },
   },
 });
-const menuList = ['回复我的', '@我的', '收到的赞', '系统消息', '我的消息'];
+const menuList = [
+  { name: '回复我的', path: 'reply' },
+  { name: '@我的', path: 'at' },
+  { name: '收到的赞', path: 'love' },
+  { name: '系统消息', path: 'system' },
+  { name: '我的消息', path: 'whisper' },
+];
 
 const popoverVisible = ref(false);
-const handleLink = () => {
+const handleLink = (path?: any) => {
   if (!isLogin.value) {
     gotoLogin();
   } else {
     popoverVisible.value = false;
+    window.open(router.resolve(`/message/${path}`).href, '_blank');
   }
 };
 </script>
@@ -97,6 +119,15 @@ const handleLink = () => {
 :deep() {
   .el-popover {
     padding: 0 0 0 10px;
+  }
+  .el-badge__content.is-fixed {
+    right: calc(1px + var(--el-badge-size) / 2 + 20px);
+  }
+  .el-menu_badge {
+    .el-badge__content.is-fixed {
+      right: calc(1px + var(--el-badge-size) / 2);
+      top: 18px;
+    }
   }
 }
 

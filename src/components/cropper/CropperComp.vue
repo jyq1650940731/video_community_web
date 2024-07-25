@@ -186,12 +186,12 @@ const initDrag = () => {
   const showPosition = showPositionRef.value; // 获取showPosition元素
 
   let isDragging = false; // 是否正在拖动
-  let offsetX, offsetY;
+  let offsetX: number, offsetY: number;
 
   // 鼠标按下事件处理程序
   cropBoxMove.addEventListener(
     'mousedown',
-    (e) => {
+    (e: { clientX: number; clientY: number }) => {
       isDragging = true;
       offsetX = e.clientX - cropBox.getBoundingClientRect().left; // 鼠标相对crop-box的X偏移
       offsetY = e.clientY - cropBox.getBoundingClientRect().top; // 鼠标相对crop-box的Y偏移
@@ -233,7 +233,7 @@ const initDrag = () => {
   );
 };
 
-const startResize = (resizeDirection, event) => {
+const startResize = (resizeDirection: string, event: { clientX: number }) => {
   state.isResizing = true;
   state.resizeDirection = resizeDirection;
   // 记录按下时的状态
@@ -250,7 +250,7 @@ const startResize = (resizeDirection, event) => {
 };
 
 // 缩放中
-const resize = (event) => {
+const resize = (event: { touches: string | any[]; clientX: any }) => {
   if (!state.isResizing) return;
   // 根据event值来判断是移动端还是电脑端
   const clientX =
@@ -394,6 +394,7 @@ const initBox = () => {
 const originAspectRatio = computed(() => {
   return state.width / state.height;
 });
+
 // 计算原图呈现宽
 const originShowWidth = computed(() => {
   // 如果原图较高，重新计算呈现宽，否则就480

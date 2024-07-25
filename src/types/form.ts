@@ -5,6 +5,7 @@ export interface uploadType {
   coverURL: String;
   title: String;
   category: categoryType[];
-  tags: [];
+  tags?: [];
   descr: String;
+  type?: String;
 }

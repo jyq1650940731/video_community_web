@@ -1,10 +1,10 @@
 <!--
  * @Author: YourName
  * @Date: 2024-05-24 16:35:24
- * @LastEditTime: 2024-05-25 17:57:46
+ * @LastEditTime: 2024-06-14 15:45:36
  * @LastEditors: YourName
  * @Description: 
- * @FilePath: \video_community_web\src\views\platform\upload\children\coverDIalog.vue
+ * @FilePath: \video_community_web\src\views\platform\upload\children\CoverDIalog.vue
  * 版权声明
 -->
 
@@ -216,7 +216,7 @@ const sendOrder = () => {
   coverDialog.visible = false;
 };
 
-// 进度
+// 获取进度位置
 const changeCurrentPer = (curr: number) => {
   coverDialog.currentPer = curr;
   const currentTime = curr * props.videoDuration;
@@ -233,11 +233,6 @@ const initDrag = () => {
 
   // 鼠标按下事件处理程序
   sliderHandle.addEventListener('mousedown', () => {
-    isDragging = true;
-  });
-
-  // 移动端 按下
-  sliderHandle.addEventListener('touchstart', () => {
     isDragging = true;
   });
 

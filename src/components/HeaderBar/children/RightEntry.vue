@@ -1,7 +1,7 @@
 <template>
   <ul class="right-entry">
     <li class="header-avatar-wrap" v-if="!isLogin">
-      <div class="default-login" @click="lrRef.showDialog()">登录</div>
+      <div class="default-login" @click="setLoginDialogVisible(true)">登录</div>
     </li>
     <li
       class="header-avatar-wrap"
@@ -10,7 +10,7 @@
       @mouseleave="handleMouseLeave"
     >
       <router-link
-        to="/"
+        :to="`/space/${userinfo.uid}`"
         class="header-avatar-wrap--container mini-avatar--small"
       >
         <div class="bala-avatar">
@@ -44,7 +44,7 @@
             </router-link>
           </div>
           <div class="links-item">
-            <router-link to="/" class="single-link-item" target="_blank">
+            <router-link to="/account" class="single-link-item" target="_blank">
               <div class="link-title">
                 <svg-icon name="user" class="link-icon" width="18"></svg-icon>
                 <span>个人中心</span>
@@ -102,7 +102,7 @@
   </ul>
 
   <!-- 登录框 -->
-  <LoginRegister ref="lrRef"></LoginRegister>
+  <LoginRegister></LoginRegister>
 </template>
 <script lang="ts" setup>
 import router from '@/router';
@@ -110,34 +110,21 @@ import { useUserStore } from '@/stores/modules/user';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { RouteLocationRaw } from 'vue-router';
 const { isLogin, userinfo } = storeToRefs(useUserStore());
-const { userLogout } = useUserStore();
+const { userLogout, setLoginDialogVisible } = useUserStore();
 
 let outTimer: any;
 let inTimer: any;
 
 const popoverVisible = ref(false);
 const state = reactive({
-  avatarUrl:
-    'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
   isHistoryOpen: false,
   // 头像气泡框的显隐
   popoverDisplay: 'none',
   isPopoverShow: false,
-  // 登录框组件的显隐
-  dialogVisible: false,
   // 屏幕宽度
   screenWidth: window.innerWidth,
 });
-const {
-  avatarUrl,
-  isHistoryOpen,
-  isPopoverShow,
-  popoverDisplay,
-  dialogVisible,
-  screenWidth,
-} = toRefs(state);
-
-const lrRef = ref();
+const { isPopoverShow, popoverDisplay, screenWidth } = toRefs(state);
 
 const handleMouseEnter = () => {
   clearTimeout(outTimer); // 这里要清除隐藏的计时器，否则在0.2秒内出入头像，会导致头像变大但气泡突然消失
@@ -170,7 +157,7 @@ const handleLogout = () => {
 
 const gotoLogin = () => {
   popoverVisible.value = false;
-  lrRef.value.showDialog();
+  setLoginDialogVisible(true);
 };
 
 const handleLinktTo = (route: RouteLocationRaw) => {
@@ -371,7 +358,7 @@ const handleLinktTo = (route: RouteLocationRaw) => {
     width: 90px;
     height: 34px;
     border-radius: 8px;
-    background: #fb7299;
+    background: var(--brand_blue);
     color: #fff;
     text-align: center;
     font-size: 14px;
@@ -380,7 +367,7 @@ const handleLinktTo = (route: RouteLocationRaw) => {
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: #f992af;
+      background-color: var(--Lb4);
     }
 
     .tg-upload {
@@ -445,12 +432,14 @@ const handleLinktTo = (route: RouteLocationRaw) => {
 }
 
 .popHide {
+  display: none;
   animation: fade-out 0.2s ease-out forwards;
   transform-origin: top;
   /* 设置动画的旋转点为顶部 */
 }
 
 .popShow {
+  display: block;
   animation: fade-in 0.2s ease-out forwards;
   transform-origin: top;
 }

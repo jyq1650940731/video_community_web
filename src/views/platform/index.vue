@@ -109,7 +109,7 @@
 }
 
 .platform-nav {
-  --el-menu-active-color: var(--brand_pink);
+  --el-menu-active-color: var(--brand_blue);
   --el-menu-level-padding: 40px;
 }
 

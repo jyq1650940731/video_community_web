@@ -1,7 +1,7 @@
 <!--
  * @Author: YourName
  * @Date: 2024-05-22 17:39:45
- * @LastEditTime: 2024-05-27 23:16:09
+ * @LastEditTime: 2024-06-14 11:58:24
  * @LastEditors: YourName
  * @Description: 
  * @FilePath: \video_community_web\src\views\platform\upload\children\VideoUpload.vue
@@ -269,7 +269,12 @@
 import type { uploadType } from '@/types/form';
 import SparkMD5 from 'spark-md5';
 import { askCurrentChunk, uploadCurrentChunk } from '@/api/video';
-import { UploadProps, UploadRawFile } from 'element-plus';
+import {
+  FormInstance,
+  FormRules,
+  UploadProps,
+  UploadRawFile,
+} from 'element-plus';
 import CoverDialog from './CoverDIalog.vue';
 import { categoryType } from '@/types/info';
 import { uploadFormApi } from '@/api/video';
@@ -318,7 +323,7 @@ watch(currentVideo, (newVal, oldVal) => {
 //提交
 const handleUploadForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  await formEl.validate((valid, fields) => {
+  await formEl.validate((valid: any, fields: any) => {
     if (valid) {
       let cover = null;
       fetch(video.coverImageURL)
@@ -327,7 +332,6 @@ const handleUploadForm = async (formEl: FormInstance | undefined) => {
           cover = new File([blob], fileHash.value + Date.now() + '.jpg', {
             type: 'image/jpeg',
           });
-          console.log(cover);
           const formData = new FormData();
           formData.append('cover', cover);
           formData.append('hash', fileHash.value);
@@ -337,7 +341,7 @@ const handleUploadForm = async (formEl: FormInstance | undefined) => {
           formData.append('mcid', uploadForm.category[0].id);
           formData.append('scid', uploadForm.category[1].id);
           let tags = '';
-          tagsRef.value.tags.forEach((tag) => {
+          tagsRef.value.tags.forEach((tag: string) => {
             tags = tags + tag + '\n';
           });
           formData.append('tags', tags);
@@ -404,7 +408,6 @@ const handleVideoUpload = async (rawFile: UploadRawFile) => {
       );
       if (state.percentage == 100) break;
     } catch (e) {
-      console.log('上传失败');
       state.isFailed = true;
       state.isPause = true;
     }

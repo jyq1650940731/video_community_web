@@ -1,22 +1,12 @@
 /*
  * @Author: YourName
  * @Date: 2024-05-25 23:44:59
- * @LastEditTime: 2024-05-25 23:45:15
+ * @LastEditTime: 2024-06-03 15:58:39
  * @LastEditors: YourName
  * @Description:
  * @FilePath: \video_community_web\src\api\category.ts
  * 版权声明
  */
-/*
- * @Author: YourName
- * @Date: 2024-05-25 23:44:59
- * @LastEditTime: 2024-05-25 23:44:59
- * @LastEditors: YourName
- * @Description:
- * @FilePath: \video_community_web\src\api\category.ts
- * 版权声明
- */
-
 import request from '@/utils/request';
 import type { responseData } from '@/types/api';
 

@@ -8,6 +8,7 @@
     "src/**/*.js",
     "src/assets/emoji/emoji.ts",
     "src/assets/emoji/emoji.js",
+    "src/assets/json/*.json",
     "./auto-imports.d.ts"
   ],
   "exclude": ["src/**/__tests__/*"],
